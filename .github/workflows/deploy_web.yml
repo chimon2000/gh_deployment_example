@@ -1,0 +1,38 @@
+name: Deploy web app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+
+      - name: Add pub cache to path
+        shell: bash
+        run: |
+          echo "export PATH=$PATH:$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
+      - name: Install global dependencies
+        run: |
+          dart pub global activate grinder
+
+      - name: Get local dependencies
+        run: flutter pub get
+
+      - name: Build web app
+        run: grind build stage --dest=public/build/${GITHUB_REF##*/}
+
+      - name: Deploy web app
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          keep_files: true
