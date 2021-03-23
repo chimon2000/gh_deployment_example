@@ -21,7 +21,7 @@ Future<void> test() => runAsync('flutter', arguments: ['test']);
 Future<void> stage() async {
   final args = context.invocation.arguments;
   final destination = args.getOption('dest') ?? 'public/develop';
-  final baseHref = args.getOption('base_href') ?? 'develop';
+  final baseHref = args.getOption('base-href') ?? 'build/develop';
 
   final indexPath =
       path.join(Directory.current.path, 'templates', 'index.html');
