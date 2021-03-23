@@ -12,7 +12,6 @@
 # Ignoring native folders of the example as they can be re-generated easily
 **/android/
 **/ios/
-**/web/
 **/macos/
 
 # IntelliJ related
